@@ -1,0 +1,14 @@
+{
+  "name": "LineBotTaipeiPets",
+  "description": "Line Bot for Taipei Pets",
+  "repository": "https://github.com/kkdai/LineBotTaipeiPets",
+  "keywords": ["Line", "go", "static"],
+  "buildpacks": [
+    {
+      "url": "https://github.com/kr/heroku-buildpack-go.git"
+    },
+    {
+      "url": "heroku/go"
+    }
+  ]
+}
