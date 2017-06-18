@@ -15,6 +15,7 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"strings"
 )
 
 //Stations :All station related API
@@ -39,7 +40,7 @@ func (s *Stations) GetNextStation(statName string) *THSRStation {
 
 	for {
 		retStation := &s.allStations[s.getNextIndex()]
-		if retStation.StationName.ZhTw == statName {
+		if strings.Contains(retStation.StationName.ZhTw, statName) {
 			result = retStation
 			break
 		}
