@@ -52,7 +52,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				//var station *THSRStation
+				var station *THSRStation
 				log.Println(message.Text)
 				inText := strings.ToLower(message.Text)
 
@@ -60,9 +60,16 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				if strings.Contains(inText, "個數") {
 					out = fmt.Sprintf("您好，目前共有 %d 個車站", StationDB.GetStationsCount())
 				} else if strings.Contains(inText, "車站資訊") {
-					//station = StationDB.GetSpecficStation(inText)
-					out = fmt.Sprintf(inText)
-					//out = fmt.Sprintf("您好，車站資訊：名稱%s, 編號為:%s, 地址: %s, 精度: %d, 緯度: %d", station.StationName.ZhTw, station.StationID, station.StationAddress, station.StationPosition.PositionLat, station.StationPosition.PositionLon)
+					station = StationDB.GetNextStation(inText)
+					for index := 1; index <= StationDB.GetStationsCount(); index++ {
+						if strings.Contains(station.StationName.ZhTw, inText) {
+							out = ""
+							out = fmt.Sprintf("您好，車站資訊：名稱%s, 編號為:%s, 地址: %s, 精度: %d, 緯度: %d", station.StationName.ZhTw, station.StationID, station.StationAddress, station.StationPosition.PositionLat, station.StationPosition.PositionLon)
+						}
+					}
+					if out == "" {
+						out = "找不到相關資訊"
+					}
 				}
 
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
