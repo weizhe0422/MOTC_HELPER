@@ -62,7 +62,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if strings.Contains(inText, "車站資訊") {
 					station = StationDB.GetNextStation(inText)
 					for index := 1; index <= StationDB.GetStationsCount(); index++ {
-						if strings.Contains(station.StationName.ZhTw, inText) {
+						if strings.Contains(inText, station.StationName.ZhTw) {
 							out = ""
 							out = fmt.Sprintf("您好，車站資訊：名稱%s, 編號為:%s, 地址: %s, 精度: %d, 緯度: %d", station.StationName.ZhTw, station.StationID, station.StationAddress, station.StationPosition.PositionLat, station.StationPosition.PositionLon)
 						}
