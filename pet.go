@@ -12,49 +12,39 @@
 
 package main
 
-//PetType :
-type PetType int
+//StationType :
+type StationType int
 
 const (
-	//Dog :
-	Dog PetType = iota
-	//Cat :
-	Cat
+	//Staiton :
+	THSR StationType = iota
+	METRO
 )
 
-//Pet :
-type Pet struct {
-	ID              string `json:"_id"`
-	Name            string `json:"Name"`
-	Sex             string `json:"Sex"`
-	Type            string `json:"Type"`
-	Build           string `json:"Build"`
-	Age             string `json:"Age"`
-	Variety         string `json:"Variety"`
-	Reason          string `json:"Reason"`
-	AcceptNum       string `json:"AcceptNum"`
-	ChipNum         string `json:"ChipNum"`
-	IsSterilization string `json:"IsSterilization"`
-	HairType        string `json:"HairType"`
-	Note            string `json:"Note"`
-	Resettlement    string `json:"Resettlement"`
-	Phone           string `json:"Phone"`
-	Email           string `json:"Email"`
-	ChildreAnlong   string `json:"ChildreAnlong"`
-	AnimalAnlong    string `json:"AnimalAnlong"`
-	Bodyweight      string `json:"Bodyweight"`
-	ImageName       string `json:"ImageName"`
+//THSRSation :
+type THSRStation struct {
+	StationID   string `json:"StationID"`
+	StationName struct {
+		ZhTw string `json:"Zh_tw"`
+		En   string `json:"En"`
+	} `json:"StationName"`
+	StationPosition struct {
+		PositionLat float64 `json:"PositionLat"`
+		PositionLon float64 `json:"PositionLon"`
+	} `json:"StationPosition"`
+	StationAddress string `json:"StationAddress"`
+	OperatorID     string `json:"OperatorID"`
 }
 
-//PetType :
-func (p *Pet) PetType() PetType {
-	var retType PetType
-	switch p.Type {
-	case "犬":
-		retType = Dog
-	case "貓":
-		retType = Cat
-	}
-
-	return retType
+//StationType :
+func (s *THSRStation) StationType() StationType {
+	var statType StationType
+	/*switch s.StationType {
+	case "高鐵":
+		statType = THSR
+	case "捷運":
+		statType = METRO
+	}*/
+	statType = THSR
+	return statType
 }

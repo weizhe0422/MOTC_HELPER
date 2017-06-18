@@ -24,12 +24,12 @@ import (
 
 var bot *linebot.Client
 
-//PetDB :
-var PetDB *Pets
+//StationDB :
+var StationDB *Stations
 
 func main() {
 	var err error
-	PetDB = NewPets()
+	StationDB = NewStaions()
 	bot, err = linebot.New(os.Getenv("ChannelSecret"), os.Getenv("ChannelAccessToken"))
 	log.Println("Bot:", bot, " err:", err)
 	http.HandleFunc("/callback", callbackHandler)
@@ -52,29 +52,28 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				var pet *Pet
+				var station *THSRStation
 				log.Println(message.Text)
 				inText := strings.ToLower(message.Text)
-				if strings.Contains(inText, "狗") || strings.Contains(inText, "dog") {
-					pet = PetDB.GetNextDog()
-				} else if strings.Contains(inText, "貓") || strings.Contains(inText, "cat") {
-					pet = PetDB.GetNextCat()
+
+				if strings.Contains(inText, "車站資訊") {
+					station = StationDB.GetNextStation()
 				}
 
-				if pet == nil {
-					pet = PetDB.GetNextPet()
+				if station == nil {
+					station = StationDB.GetNextStation()
 				}
 
-				out := fmt.Sprintf("您好，目前的動物：名為%s, 所在地為:%s, 敘述: %s 電話為:%s 圖片網址在: %s", pet.Name, pet.Resettlement, pet.Note, pet.Phone, pet.ImageName)
+				out := fmt.Sprintf("您好，車站資訊：名為%s, 編號為:%s, 地址: %s 經度為:%s 緯度在: %s", station.StationName.ZhTw, station.StationID, station.StationAddress, station.StationPosition.PositionLat, station.StationPosition.PositionLon)
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
 					log.Print(err)
 				}
 
-				log.Println("Img:", pet.ImageName)
+				//log.Println("Img:", pet.ImageName)
 
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(pet.ImageName, pet.ImageName)).Do(); err != nil {
-					log.Print(err)
-				}
+				//if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(pet.ImageName, pet.ImageName)).Do(); err != nil {
+				//	log.Print(err)
+				//}
 			}
 		}
 	}

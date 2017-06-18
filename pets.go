@@ -17,39 +17,39 @@ import (
 	"log"
 )
 
-//Pets :All pet related API
-type Pets struct {
-	allPets    []Pet
-	queryIndex int
+//Stations :All station related API
+type Stations struct {
+	allStations []THSRStation
+	queryIndex  int
 }
 
-//NewPets :
-func NewPets() *Pets {
-	p := new(Pets)
-	p.getPets()
-	return p
+//NewStaions :
+func NewStaions() *Stations {
+	s := new(Stations)
+	s.getStations()
+	return s
 }
 
-//GetNextPet :
-func (p *Pets) GetNextPet() *Pet {
-	if len(p.allPets) == 0 {
-		p.getPets()
+//GetNextStation :
+func (s *Stations) GetNextStation() *THSRStation {
+	if len(s.allStations) == 0 {
+		s.getStations()
 	}
 
-	retPet := &p.allPets[p.getNextIndex()]
-	return retPet
+	retStation := &s.allStations[s.getNextIndex()]
+	return retStation
 }
 
-//GetNextDog :
-func (p *Pets) GetNextDog() *Pet {
-	if len(p.allPets) == 0 {
-		p.getPets()
+//GetNextTHSRStation :
+func (s *Stations) GetNextTHSRStation() *THSRStation {
+	if len(s.allStations) == 0 {
+		s.getStations()
 	}
 
-	var retPet *Pet
+	var retPet *THSRStation
 	for {
-		retPet = &p.allPets[p.getNextIndex()]
-		if retPet.PetType() == Dog {
+		retPet = &s.allStations[s.getNextIndex()]
+		if retPet.StationType() == THSR {
 			break
 		}
 	}
@@ -57,28 +57,12 @@ func (p *Pets) GetNextDog() *Pet {
 	return retPet
 }
 
-//GetNextCat :
-func (p *Pets) GetNextCat() *Pet {
-	if len(p.allPets) == 0 {
-		p.getPets()
-	}
-
-	var retPet *Pet
-	for {
-		retPet = &p.allPets[p.getNextIndex()]
-		if retPet.PetType() == Cat {
-			break
-		}
-	}
-	return retPet
+//GetStationsCount :
+func (s *Stations) GetStationsCount() int {
+	return len(s.allStations)
 }
 
-//GetPetsCount :
-func (p *Pets) GetPetsCount() int {
-	return len(p.allPets)
-}
-
-func (p *Pets) getPets() {
+func (s *Stations) getStations() {
 	c := NewClient(OpenDataURL)
 	body, err := c.GetHttpRes()
 	if err != nil {
@@ -86,26 +70,27 @@ func (p *Pets) getPets() {
 	}
 
 	// log.Println("ret:", string(body))
-	var result TaipeiPets
+	var result []THSRStation
 	err = json.Unmarshal(body, &result)
 
 	if err != nil {
 		//error
 		log.Fatal(err)
 	}
-	log.Println("All pets is :", len(result.Result.Results))
+	log.Println("All THSR Stations is :", len(result))
 	// for _, v := range result.Result.Results {
 	// 	p.allPets = append(p.allPets, v)
 	// }
-	p.allPets = result.Result.Results
+	s.allStations = result
+	//= result
 }
 
-func (p *Pets) getNextIndex() int {
-	if p.queryIndex >= len(p.allPets) {
-		p.queryIndex = 0
+func (s *Stations) getNextIndex() int {
+	if s.queryIndex >= len(s.allStations) {
+		s.queryIndex = 0
 	}
 
-	retInt := p.queryIndex
-	p.queryIndex++
+	retInt := s.queryIndex
+	s.queryIndex++
 	return retInt
 }

@@ -12,20 +12,7 @@
 
 package main
 
-// 「臺北市開放認養動物」API存取
+// 「MOTC Transport API V2」存取
 const (
-	OpenDataURL string = "http://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=f4a75ba9-7721-4363-884d-c3820b0b917c"
+	OpenDataURL string = "http://ptx.transportdata.tw/MOTC/v2/Rail/THSR/Station?$top=30&$format=JSON"
 )
-
-
-//TaipeiPets :Get from  http://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=f4a75ba9-7721-4363-884d-c3820b0b917c
-type TaipeiPets struct {
-	Result struct {
-		Offset  int    `json:"offset"`
-		Limit   int    `json:"limit"`
-		Count   int    `json:"count"`
-		Sort    string `json:"sort"`
-		Results []Pet  `json:"results"`
-	} `json:"result"`
-}
-
