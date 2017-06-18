@@ -37,7 +37,7 @@ func (s *Stations) StationCount() int {
 }
 
 //GetNextStation :
-func (s *Stations) GetNextStation(statName string) *THSRStation {
+func (s *Stations) GetNextStation() *THSRStation {
 	if len(s.allStations) == 0 {
 		s.getStations()
 	}
