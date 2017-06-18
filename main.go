@@ -56,16 +56,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				log.Println(message.Text)
 				inText := strings.ToLower(message.Text)
 
-				out := fmt.Sprintf("您好，目前共有 %d 個車站", StationDB.GetStationsCount())
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
-					log.Print(err)
+				out := ""
+				if strings.Contains(inText, "個數") {
+					out = fmt.Sprintf("您好，目前共有 %d 個車站", StationDB.GetStationsCount())
+				} else if strings.Contains(inText, "車站資訊") {
+					station = StationDB.GetSpecficStation(inText)
+					out = fmt.Sprintf("您好，車站資訊：名稱%s, 編號為:%s, 地址: %s, 精度: %d, 緯度: %d", station.StationName.ZhTw, station.StationID, station.StationAddress, station.StationPosition.PositionLat, station.StationPosition.PositionLon)
 				}
 
-				if strings.Contains(inText, "車站資訊") {
-					station = StationDB.GetNextStation(inText)
-				}
-
-				out = fmt.Sprintf("您好，車站資訊：名稱%s, 編號為:%s, 地址: %s", station.StationName.ZhTw, station.StationID, station.StationAddress)
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
 					log.Print(err)
 				}

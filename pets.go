@@ -43,9 +43,19 @@ func (s *Stations) GetNextStation(statName string) *THSRStation {
 	}
 
 	retStation := &s.allStations[s.getNextIndex()]
+	return retStation
+}
+
+//GetSpecficStation :
+func (s *Stations) GetSpecficStation(statName string) *THSRStation {
+	if len(s.allStations) == 0 {
+		s.getStations()
+	}
+
+	retStation := &s.allStations[0]
 
 	for index := 0; index <= len(s.allStations); index++ {
-		retStation = &s.allStations[s.getNextIndex()]
+		retStation = &s.allStations[index]
 		if strings.Contains(retStation.StationName.ZhTw, statName) {
 			break
 		}
