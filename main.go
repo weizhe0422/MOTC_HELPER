@@ -19,8 +19,6 @@ import (
 	"os"
 	"strings"
 
-	"strconv"
-
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
@@ -58,7 +56,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				log.Println(message.Text)
 				inText := strings.ToLower(message.Text)
 
-				out := fmt.Sprintf("您好，目前共有", strconv.Itoa(StationDB.GetStationsCount()), "個車站")
+				out := fmt.Sprintf("您好，目前共有 %d 個車站", StationDB.GetStationsCount())
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
 					log.Print(err)
 				}
