@@ -31,21 +31,26 @@ func NewStaions() *Stations {
 	return s
 }
 
+//StationCount :
+func (s *Stations) StationCount() int {
+	return len(s.allStations)
+}
+
 //GetNextStation :
 func (s *Stations) GetNextStation(statName string) *THSRStation {
 	if len(s.allStations) == 0 {
 		s.getStations()
 	}
-	result := new(THSRStation)
 
-	for {
-		retStation := &s.allStations[s.getNextIndex()]
+	retStation := &s.allStations[s.getNextIndex()]
+
+	for index := 0; index <= len(s.allStations); index++ {
+		retStation = &s.allStations[s.getNextIndex()]
 		if strings.Contains(retStation.StationName.ZhTw, statName) {
-			result = retStation
 			break
 		}
 	}
-	return result
+	return retStation
 }
 
 //GetNextTHSRStation :
