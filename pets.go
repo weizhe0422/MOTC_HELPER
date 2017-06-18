@@ -31,13 +31,20 @@ func NewStaions() *Stations {
 }
 
 //GetNextStation :
-func (s *Stations) GetNextStation() *THSRStation {
+func (s *Stations) GetNextStation(statName string) *THSRStation {
 	if len(s.allStations) == 0 {
 		s.getStations()
 	}
+	result := new(THSRStation)
 
-	retStation := &s.allStations[s.getNextIndex()]
-	return retStation
+	for {
+		retStation := &s.allStations[s.getNextIndex()]
+		if retStation.StationName.ZhTw == statName {
+			result = retStation
+			break
+		}
+	}
+	return result
 }
 
 //GetNextTHSRStation :
