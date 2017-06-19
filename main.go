@@ -58,7 +58,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 				out := ""
 				if strings.Contains(inText, "個數") {
-					out = fmt.Sprintf("您好，目前共有 %d 個車站", StationDB.GetStationsCount())
+					out = fmt.Sprintf("您好，目前共有 %d 個高鐵車站", StationDB.GetStationsCount())
 				} else if strings.Contains(inText, "車站資訊") {
 					for index := 1; index <= StationDB.GetStationsCount(); index++ {
 						station = StationDB.GetNextStation()

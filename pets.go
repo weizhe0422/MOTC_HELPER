@@ -86,7 +86,7 @@ func (s *Stations) GetStationsCount() int {
 }
 
 func (s *Stations) getStations() {
-	c := NewClient(OpenDataURL)
+	c := NewClient(URLStationInfo)
 	body, err := c.GetHttpRes()
 	if err != nil {
 		return
