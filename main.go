@@ -19,8 +19,6 @@ import (
 	"os"
 	"strings"
 
-	"strconv"
-
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
@@ -57,7 +55,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			case *linebot.TextMessage:
 				var station *THSRStation
 				//var timeTable []*StationtimeTable
-				var timeTable *StationtimeTable
+				//var timeTable *StationtimeTable
 				log.Println(message.Text)
 				inText := strings.ToLower(message.Text)
 
@@ -71,10 +69,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						if strings.Contains(inText, station.StationName.ZhTw) {
 							out = ""
 							out = fmt.Sprintf("您好，車站資訊：名稱%s, 編號為:%s, 地址: %s, 精度: %f, 緯度: %f", station.StationName.ZhTw, station.StationID, station.StationAddress, station.StationPosition.PositionLat, station.StationPosition.PositionLon)
-							stationID, _ := strconv.Atoi(station.StationID)
+							//stationID, _ := strconv.Atoi(station.StationID)
 							//timeTable = timeTableDB.GetFutTimetable(stationID)
-							timeTable = timeTableDB.GetNextTimetabledata(stationID)
-							out = out + fmt.Sprintf("可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s", timeTable.TrainNo, timeTable.ArrivalTime, timeTable.EndingStationName)
+							//timeTable = timeTableDB.GetNextTimetabledata(stationID)
+							//out = out + fmt.Sprintf("可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s", timeTable.TrainNo, timeTable.ArrivalTime, timeTable.EndingStationName)
 						}
 					}
 					if out == "" {
