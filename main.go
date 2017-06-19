@@ -58,7 +58,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			case *linebot.TextMessage:
 				var station *THSRStation
 				//var timeTable []*StationtimeTable
-				var timeTable *StationtimeTable
+				//var timeTable *StationtimeTable
 				log.Println(message.Text)
 				inText := strings.ToLower(message.Text)
 
