@@ -66,7 +66,7 @@ func (t *Timetables) GetFutTimetable(stationNo int) []*StationtimeTable {
 		arriveTime, _ := time.Parse("2016-01-02 03-04", timetable.TrainDate+" "+timetable.ArrivalTime)
 
 		hh, _ := time.ParseDuration("1h")
-		if arriveTime.After(time.Now().Add(-6*hh)) && arriveTime.After(time.Now().Add(3*hh)) {
+		if arriveTime.After(time.Now().Add(-3*hh)) && arriveTime.After(time.Now().Add(13*hh)) {
 			result = append(result, timetable)
 		}
 		//result = append(result, timetable)
