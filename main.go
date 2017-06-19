@@ -81,7 +81,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							body, _ := c.GetHttpRes()
 							var result []StationtimeTable
 							err = json.Unmarshal(body, &result)
-							out = out + strconv.Itoa(len(result))
+							out = out + fmt.Sprintf("Timetable長度:%d", len(result))
 							//out = out + fmt.Sprintf("可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s", timeTable.TrainNo, timeTable.ArrivalTime, timeTable.EndingStationName)
 						}
 					}
