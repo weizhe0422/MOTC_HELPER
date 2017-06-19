@@ -55,6 +55,7 @@ func (t *Timetables) GetNextTimetabledata(stationNo int) *StationtimeTable {
 	}
 
 	retStation := &t.allTimetable[t.getNextIndex()]
+
 	return retStation
 }
 
