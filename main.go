@@ -56,7 +56,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
 				var station *THSRStation
-				//var timeTable []*StationtimeTable
+				var timeTable []*StationtimeTable
 				//var timeTable *StationtimeTable
 				log.Println(message.Text)
 				inText := strings.ToLower(message.Text)
@@ -65,6 +65,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				if strings.Contains(inText, "個數") {
 					out = fmt.Sprintf("您好，目前共有 %d 個高鐵車站", StationDB.GetStationsCount())
 				} else if strings.Contains(inText, "車站資訊") {
+
 					for index := 1; index <= StationDB.GetStationsCount(); index++ {
 						station = StationDB.GetNextStation()
 
@@ -72,11 +73,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							out = ""
 							out = fmt.Sprintf("您好，車站資訊：名稱%s, 編號為:%s, 地址: %s, 精度: %f, 緯度: %f", station.StationName.ZhTw, station.StationID, station.StationAddress, station.StationPosition.PositionLat, station.StationPosition.PositionLon)
 							stationID, _ := strconv.Atoi(station.StationID)
-							//timeTable = timeTableDB.GetFutTimetable(stationID)
-							//timeTable = timeTableDB.GetNextTimetabledata(stationID)
 							timeTableDB = NewTimetables(stationID)
-							out = out + fmt.Sprintf("資料順序: %d", timeTableDB.getNextIndex())
-							//out = out + fmt.Sprintf(" 可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s", timeTable.TrainNo, timeTable.ArrivalTime, timeTable.EndingStationName)
+
+							timeTable = timeTableDB.GetFutTimetable(stationID)
+							//timeTable = timeTableDB.GetNextTimetabledata(stationID)
+							for index2 := 0; index2 <= len(timeTable); index2++ {
+								out = out + fmt.Sprintln(" 可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s", timeTable[index2].TrainNo, timeTable[index2].ArrivalTime, timeTable[index2].EndingStationName)
+							}
 						}
 					}
 					if out == "" {
