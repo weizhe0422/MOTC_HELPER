@@ -56,7 +56,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
 				var station *THSRStation
-				var timeTable []*StationtimeTable
+				//var timeTable []*StationtimeTable
+				var timeTable *StationtimeTable
 				log.Println(message.Text)
 				inText := strings.ToLower(message.Text)
 
@@ -71,8 +72,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							out = ""
 							out = fmt.Sprintf("您好，車站資訊：名稱%s, 編號為:%s, 地址: %s, 精度: %f, 緯度: %f", station.StationName.ZhTw, station.StationID, station.StationAddress, station.StationPosition.PositionLat, station.StationPosition.PositionLon)
 							stationID, _ := strconv.Atoi(station.StationID)
-							timeTable = timeTableDB.GetFutTimetable(stationID)
-							out = out + fmt.Sprintf("可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s", timeTable[0].TrainNo, timeTable[0].ArrivalTime, timeTable[0].EndingStationName)
+							//timeTable = timeTableDB.GetFutTimetable(stationID)
+							timeTable = timeTableDB.GetNextTimetabledata(stationID)
+							out = out + fmt.Sprintf("可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s", timeTable.TrainNo, timeTable.ArrivalTime, timeTable.EndingStationName)
 						}
 					}
 					if out == "" {
