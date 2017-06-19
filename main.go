@@ -76,12 +76,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							timeTableDB = NewTimetables(stationID)
 
 							timeTable = timeTableDB.GetFutTimetable(stationID)
-							out = out + fmt.Sprintf(" 可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s", timeTable[1].TrainNo, timeTable[1].ArrivalTime, timeTable[1].EndingStationName)
 							//out = out + fmt.Sprintf("資料筆數:%d", len(timeTable))
 							//timeTable = timeTableDB.GetNextTimetabledata(stationID)
-							//for index2 := 0; index2 <= len(timeTable); index2++ {
-							//	out = out + fmt.Sprintf(" 可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s", timeTable[index2].TrainNo, timeTable[index2].ArrivalTime, timeTable[index2].EndingStationName)
-							//}
+							for index2 := 0; index2 <= len(timeTable)-25; index2++ {
+								out = out + fmt.Sprintf(" 可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s", timeTable[index2].TrainNo, timeTable[index2].ArrivalTime, timeTable[index2].EndingStationName)
+							}
 						}
 					}
 					if out == "" {
