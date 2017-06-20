@@ -94,8 +94,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							}
 							if timeTableMessage == "" {
 								out = out + fmt.Sprintf("目前沒有可搭的班車")
+								out = out + URLDailyTimetable + strconv.Itoa(stationID) + "/" + time.Now().Format("2006-01-02") + "?$orderby=ArrivalTime%20desc&$top=30&$format=JSON"
 							} else {
 								out = out + timeTableMessage
+
 							}
 						}
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
