@@ -68,8 +68,12 @@ func (t *Timetables) GetFutTimetable(stationNo int) []*StationtimeTable {
 		hh, _ := time.ParseDuration("1h")
 		if arriveTime.After(time.Now().Add(-3*hh)) && arriveTime.After(time.Now().Add(1*hh)) {
 			result = append(result, timetable)
+
+			if len(result) >= 3 {
+				break
+			}
 		}
-		result = append(result, timetable)
+		//result = append(result, timetable)
 	}
 
 	return result
