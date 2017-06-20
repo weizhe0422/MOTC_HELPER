@@ -21,7 +21,7 @@ func NewTimetables(stationNo int) *Timetables {
 }
 
 func (t *Timetables) getTimetable(stationNo int) {
-	url := URLDailyTimetable + strconv.Itoa(stationNo) + "/" + time.Now().Format("2006-01-02") + "?$top=30&$format=JSON"
+	url := URLDailyTimetable + strconv.Itoa(stationNo) + "/" + time.Now().Format("2006-01-02") + "?$orderby=ArrivalTime%20desc&$top=30&$format=JSON"
 	c := NewClient(url)
 	body, err := c.GetHttpRes()
 	if err != nil {
