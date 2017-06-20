@@ -63,7 +63,7 @@ func (t *Timetables) GetFutTimetable(stationNo int) []*StationtimeTable {
 	result := []*StationtimeTable{}
 	for index := 1; index <= len(t.allTimetable); index++ {
 		timetable := t.GetNextTimetabledata(stationNo)
-		arriveTime, _ := time.Parse("2016-01-02 03-04", timetable.TrainDate+" "+timetable.ArrivalTime)
+		/*arriveTime, _ := time.Parse("2016-01-02 03-04", timetable.TrainDate+" "+timetable.ArrivalTime)
 
 		hh, _ := time.ParseDuration("1h")
 		if arriveTime.After(time.Now().Add(-3*hh)) && arriveTime.After(time.Now().Add(1*hh)) {
@@ -72,8 +72,8 @@ func (t *Timetables) GetFutTimetable(stationNo int) []*StationtimeTable {
 			if len(result) >= 3 {
 				break
 			}
-		}
-		//result = append(result, timetable)
+		}*/
+		result = append(result, timetable)
 	}
 
 	return result
