@@ -87,10 +87,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							timeTable = timeTableDB.GetFutTimetable(stationID)
 							for index2 := 0; index2 <= len(timeTable)-25; index2++ {
 								out = out + fmt.Sprintf(" 可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s", timeTable[index2].TrainNo, timeTable[index2].ArrivalTime, timeTable[index2].EndingStationName)
-								if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
-									log.Print(err)
-								}
 							}
+						}
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
+							log.Print(err)
 						}
 					}
 					if out == "" {
