@@ -84,7 +84,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							timeTable = timeTableDB.GetFutTimetable(stationID)
 							timeTableMessage := ""
 
-							for index2 := 0; index2 <= 3; /*len(timeTable)*/ index2++ {
+							for index2 := 0; index2 <= len(timeTable); index2++ {
 								arriveTime, _ := time.Parse("2016-01-02 03-04", timeTable[index2].TrainDate+" "+timeTable[index2].ArrivalTime)
 
 								if arriveTime.After(time.Now()) {
