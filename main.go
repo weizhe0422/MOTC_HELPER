@@ -88,7 +88,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							for index2 := 0; index2 <= 5; /*len(timeTable)*/ index2++ {
 								arriveTime, _ := time.Parse("2016-01-02 03-04", timeTable[index2].TrainDate+" "+timeTable[index2].ArrivalTime)
 
-								if arriveTime.After(time.Now().Add(-3 * hh)) {
+								if arriveTime.After(time.Now().Add(-6 * hh)) {
 									timeTableMessage = timeTableMessage + fmt.Sprintf(" 可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s\n", timeTable[index2].TrainNo, timeTable[index2].ArrivalTime, timeTable[index2].EndingStationName)
 								}
 							}
