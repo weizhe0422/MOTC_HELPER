@@ -82,19 +82,19 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							timeTableDB = NewTimetables(stationID)
 
 							timeTable = timeTableDB.GetFutTimetable(stationID)
+							timeTableMessage := ""
+
 							for index2 := 0; index2 <= 3; /*len(timeTable)*/ index2++ {
 								arriveTime, _ := time.Parse("2016-01-02 03-04", timeTable[index2].TrainDate+" "+timeTable[index2].ArrivalTime)
 
-								timeTableMessage := ""
 								if arriveTime.After(time.Now()) {
 									timeTableMessage = timeTableMessage + fmt.Sprintf(" 可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s\n", timeTable[index2].TrainNo, timeTable[index2].ArrivalTime, timeTable[index2].EndingStationName)
 								}
-								if timeTableMessage == "" {
-									out = out + fmt.Sprintf("目前沒有可搭的班車")
-								} else {
-									out = out + timeTableMessage
-								}
-
+							}
+							if timeTableMessage == "" {
+								out = out + fmt.Sprintf("目前沒有可搭的班車")
+							} else {
+								out = out + timeTableMessage
 							}
 						}
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
