@@ -76,7 +76,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 						if strings.Contains(inText, station.StationName.ZhTw) {
 							out = ""
-							out = fmt.Sprintf("您好，車站資訊：名稱%s, 編號為:%s, 地址: %s, 精度: %f, 緯度: %f", station.StationName.ZhTw, station.StationID, station.StationAddress, station.StationPosition.PositionLat, station.StationPosition.PositionLon)
+							out = fmt.Sprintf("您好，車站資訊：名稱%s, 編號為:%s, 地址: %s, 精度: %f, 緯度: %f\n", station.StationName.ZhTw, station.StationID, station.StationAddress, station.StationPosition.PositionLat, station.StationPosition.PositionLon)
 							//if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
 							//	log.Print(err)
 							//}
@@ -86,14 +86,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 							timeTable = timeTableDB.GetFutTimetable(stationID)
 							for index2 := 0; index2 <= len(timeTable)-25; index2++ {
-								out = out + fmt.Sprintf(" 可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s", timeTable[index2].TrainNo, timeTable[index2].ArrivalTime, timeTable[index2].EndingStationName)
+								out = out + fmt.Sprintf(" 可搭班次: 車次代號:%s, 到達時間:%s, 終點站:%s\n", timeTable[index2].TrainNo, timeTable[index2].ArrivalTime, timeTable[index2].EndingStationName)
 							}
 						}
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
 							log.Print(err)
 						}
-						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
-							log.Print(err)
 						}
 					}
 					if out == "" {
