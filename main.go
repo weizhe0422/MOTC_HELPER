@@ -92,6 +92,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
 							log.Print(err)
 						}
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(out)).Do(); err != nil {
+							log.Print(err)
+						}
 					}
 					if out == "" {
 						out = "找不到相關資訊"
